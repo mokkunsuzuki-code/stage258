@@ -1,10 +1,10 @@
 {
-  "description": "Fill this after publishing the anchor bundle to an external location such as GitHub Release.",
-  "published_at": null,
+  "version": 1,
+  "stage": "stage258",
+  "description": "Published external anchor for Stage258",
+  "release_tag": "stage258-v2",
+  "release_url": "https://github.com/mokkunsuzuki-code/stage258/releases/tag/stage258-v2",
   "published_bundle_sha256": "5c9af5d444109d14618d392bcb83356c4f8726e32079262924a078cc301f26f6",
   "published_manifest_sha256": "3b514af0fbffa269524173a77ff00aa02d617296ad11cb61c3b6e8adfc27d34b",
-  "release_tag": null,
-  "release_url": null,
-  "stage": "stage258",
-  "version": 1
+  "published_at": "2026-04-06T09:50:30Z"
 }
