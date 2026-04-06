@@ -1,99 +1,129 @@
-# Stage257: Third-Party Execution History Chain
+# Stage258: External Anchor for Third-Party Execution Chain
 
 ## Overview
 
-Stage257 introduces a **hash-chained history of independent third-party executions**.
+Stage258 anchors a **hash-chained third-party execution history** to an external, publicly verifiable location.
 
-Instead of recording a single execution result, this stage builds a **verifiable chain of executions**:
+This stage extends Stage257 by adding:
 
-A executes → B executes → C executes
+- Bundle packaging of execution history
+- SHA-256 integrity binding
+- Manifest describing chain state
+- External publication via GitHub Release
 
-Each record is linked to the previous one using SHA-256.
+This transforms:
 
-This enables:
-
-- Multi-party execution tracking
-- Deterministic verification of the entire history
-- Tamper-evident execution logs
+- "tamper-evident history" → "externally anchored verifiable history"
 
 ---
 
 ## Key Concept
 
-Each execution record contains:
+Execution chain:
 
-- executor (who ran it)
-- bundle reference
-- result (success / failure)
-- timestamp
-- SHA-256 of payload
-- SHA-256 link to previous record
+A → B → C
 
-If any past record is modified, the chain verification fails.
+Each record is:
+
+- linked via SHA-256
+- ordered deterministically
+- fully reproducible
+
+Stage258 then:
+
+1. Bundles the entire chain
+2. Computes SHA-256 of the bundle
+3. Generates a manifest
+4. Publishes artifacts externally
 
 ---
 
 ## What This Stage Proves
 
-- Multiple third-party executions can be appended
-- Each record is cryptographically linked
-- The full execution history is verifiable
-- The system detects tampering
+- Multi-party execution history is reproducible
+- Chain integrity is verifiable
+- Bundle integrity is cryptographically bound
+- External publication creates a reference point
 
 ---
 
-## Limitations
+## Important Accuracy
 
-This stage provides **tamper detection**, not absolute immutability.
+This stage does **not claim absolute immutability**.
+
+Instead, it provides:
+
+- Strong tamper detection
+- External anchoring
+- Increased cost of modification
 
 For stronger guarantees, combine with:
 
-- Git history
-- Signed commits / tags
-- External timestamp anchoring
-- Release anchoring
+- Signed releases
+- OpenTimestamps
+- Sigstore / Rekor
 - Independent mirrors
 
 ---
 
-## Quick Start
+## Artifacts
+
+Located in:
+
+
+out/anchors/
+
+
+Includes:
+
+- bundle (.tar.gz)
+- manifest (.json)
+- manifest SHA256
+- receipt (external reference)
+
+---
+
+## Quick Run
 
 ```bash
-chmod +x tools/run_stage257.sh
-./tools/run_stage257.sh
+chmod +x tools/run_stage258_external_anchor.sh
+./tools/run_stage258_external_anchor.sh
 Verification
-python3 tools/verify_third_party_chain.py
-GitHub Actions
+python3 tools/verify_stage258_anchor.py
+GitHub Release (External Anchor)
 
-This repository includes CI that:
+Example:
 
-Rebuilds the chain from scratch
-Verifies integrity
-Publishes execution artifacts
+https://github.com/mokkunsuzuki-code/stage258/releases/tag/stage258-v2
 
-This ensures reproducibility beyond local environments.
+This serves as:
 
-Directory Structure
-tools/
-  create_third_party_chain_record.py
-  verify_third_party_chain.py
-  run_stage257.sh
-
-out/
-  third_party_chain/
-    records/
-    chain_index.json
+Public reference point
+Integrity anchor
+External verification source
 Position in QSP Evolution
 
 Stage256:
 → Independent execution record
 
 Stage257:
-→ Chained multi-party execution history
+→ Hash-chained execution history
 
-Next (Stage258):
-→ External anchoring (global immutability)
+Stage258:
+→ Externally anchored execution history
 
+Philosophy
+
+This project does not claim:
+
+new cryptographic primitives
+theoretical breakthroughs
+
+It focuses on:
+
+reproducibility
+verifiability
+auditability
 License
 
 MIT License
